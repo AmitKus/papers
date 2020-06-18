@@ -30,3 +30,16 @@ equation, but a deeper and wider network is required for the 1D Burgers equation
 ## DeepXDE
 
 ![](DeepXDE.png)
+
+
+## Conclusions:
+
+### Pros
+* Unlike numerical differentiation, automatic differentiation does not differentiate the data and hence it can tolerate noisy data for training.
+
+## PINN disadvantages
+
+* PINNs are currently slower than finite elements but this can be
+alleviated via offline training.
+
+* Another limitation is the search for effective neural network architectures, which is currently done empirically by users; however, emerging meta-learning techniques can be used to automate this search.
