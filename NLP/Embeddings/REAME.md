@@ -27,4 +27,20 @@ Paper: [Text Embeddings by Weakly-Supervised Contrastive Pre-training](https://a
     - Oguz et al. [45] performs domain-matched pre-training to improve in-domain results.
     - Issue: **synthetic data tend to be of low quality**.
 
+### CCPairs: A Large Collection of Text Pair Dataset
+- (q, p) denote a text pair consisting of a query q and a passage p.
+    - (post, comment) pairs from Reddit 3, 
+    - (question, upvoted answer) pairs from Stackexchange 4, 
+    - (entity name + section title, passage) pairs from English Wikipedia, 
+    - (title, abstract) and citation pairs from Scientific papers
+    - (title, passage) pairs from Common Crawl 5 web pages and various News sources.
+- Only include datasets that can be mined automatically
+- Consistency-based filter: a model is first trained on the 1.3B noisy text pairs, and then used to rank each pair against a pool of 1 million random passages.
+    - A text pair is kept only if it falls in the top-k ranked lists. (k=2)
+    - Intution: when trained on noisy datasets, neural networks tend to memorize the clean labels first and then gradually overfit the noisy labels.
+
+
+### Claims
+- It is possible to train high-quality embeddings using self-supervised pre-training only.
+
     
