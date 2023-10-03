@@ -32,3 +32,98 @@
     - Misspelling Keywords: Sometimes when keywords in a harmful prompt is misspelled, there is an increased likelihood for the model to comply to the malicious request. 
     - Token Replacement: Define the keyword with another word, mask, or token and replace the keyword in the prompt. Switch the keyword back into the prompt in the later prompts.
     - Translation: Ask the model to translate the harmful input into a foreign language and then ask it to translate it back in some forms.
+
+
+## [Augmented Language Models: a Survey](https://arxiv.org/abs/2302.07842)
+
+- Survey paper about Augmented Langauge Models
+- Traditional LM paradigm: Parametric models predicting the next token probibility
+- ALMs: Can use various, possibly non-parametric external modules to expand their context processing ability
+
+### Definitions
+- **Reasoning:** In the context of ALMs, reasoning is decomposing a potentially complex task into simpler subtasks the LM can solve more easily by itself or using tools.
+- **Tool:** For ALMs, a tool is an external module that is typically called using a rule or a special token and whose output is included in the ALM’s context.
+- **Act:** For ALMs, calling a tool having an effect on the virtual or physical world and observing the result, typically by including it in the ALM’s current context.
+
+### Chain of thought example
+Wei et al. (2022c) introduced chain-of-thought (CoT), a few-shot prompting technique for LMs.
+
+The ability to perform reasoning with chain-of-thoughts from a few in-context examples only emerges as models reach a certain size
+
+```
+Question: Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many tennis balls does he have now? 
+
+Answer: Roger started with 5 balls. 2 cans of 3 tennis balls each is 6 tennis balls. 5 + 6 = 11. The answer is 11. 
+
+Question: The cafeteria had 23 apples. If they used 20 to make lunch and bought 6 more, how many apples do they have? 
+
+Answer: <LM>
+```
+
+### Iterative prompting example
+```
+Iteration 0 
+Text: Brittney Reese (born September 9, 1986 in Gulfport, Mississippi) is an American long jumper. 
+<LM> 
+
+Plan: Remove incorrect information 
+
+Edit: Brittney Reese (born September 9, 1986 in Gulfport, Mississippi) is an American long jumper. 
+</LM> 
+
+Iteration 1 
+Text: Brittney Reese (born September 9, 1986) is an American long jumper. 
+<LM> 
+Plan: Add information about her career 
+Edit: Brittney Reese (born September 9, 1986) is an American long jumper , who competed at the 2008 Summer Olympics, and is a 4-time World Champion . 
+</LM> 
+
+Iteration 2 
+Text: Brittney Reese (born September 9, 1986) is an American long jumper, who competed at the 2008 Summer Olympics, and is a 4-time World Champion. 
+<LM> 
+Plan: Add her birthplace 
+Edit: Brittney Reese (born September 9, 1986 in Inglewood, California ) is an American long jumper, who competed at the 2008 Summer Olympics, and is a 4-time World Champion. 
+</LM>
+```
+
+### Why reinforcement learning
+Reinforcement learning Supervised learning from human-created prompts is effective to teach models to reason and act. However, **such data is difficult and costly to obtain. Human preference data — such as rankings or likes/dislikes — is much easier, faster, and cheaper to obtain than full demonstrations.**
+
+### Limitations
+
+Since ALMs only perform predictions at the token level, they cannot reason according to LeCun (2022)’s view and may be still limited to System 1 tasks, i.e. that rely on reflex rather than logic and thinking.
+
+
+## [Effective Long-Context Scaling of Foundation Models](https://arxiv.org/abs/2309.16039)
+
+### What
+- Llama2 exteded sequence length
+- 7B/13B: 32,768-token sequences 
+- 34B/70B: 16,384-token sequences.
+### How
+- Continual pretraining from LLAMA with longer training sequences and on a dataset where long texts are upsampled.
+- Additional 400B tokens formed as long-training sequences
+- chat model: instruction finetune our continually pretrained long models without any human-annotated data.
+
+
+
+
+### Key points
+
+- 70B variant can already surpass gpt-3.5-turbo-16k’s overall performance on a suite of long-context tasks.
+- ablation experiments suggest that having abundant long texts in the pretrain dataset is not the key to achieving strong performance
+- empirically verify that long context continual pretraining is more efficient and similarly effective compared to pretraining from scratch with long sequences.
+
+![](../pics/Screenshot%20from%202023-10-03%2009-51-54.png)
+
+- not only observe significant improvements on long-context tasks but also modest improvements on standard short-context tasks, especially on coding, math, and knowledge benchmarks.
+
+
+
+
+
+
+
+### Additional
+
+- Longer sequence-length models often overlook the necessity of maintaining strong performance on standard short-context tasks, either bypassing the evaluations or reporting degenerated performance
